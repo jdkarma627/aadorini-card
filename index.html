@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadorini - Ethnic Wear</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 64, 129, 0.2);
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF4081 0%, #F50057 100%);
+            padding: 40px 30px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .floral-top {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+        }
+
+        .floral-bottom {
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.15;
+            transform: rotate(180deg);
+        }
+
+        .logo {
+            color: white;
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .name {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .contact-section {
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #FFF0F5;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .contact-item:hover {
+            background: #FFE4E9;
+            transform: translateX(5px);
+        }
+
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .email-copy-btn {
+            background: #FF4081;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .email-copy-btn:hover {
+            background: #F50057;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+        }
+
+        .email-copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .email-copy-btn.copied {
+            background: #4CAF50;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #FFE4E9;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #FF4081;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #F50057;
+            transform: scale(1.1);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Phone capture form - hidden by default */
+        .phone-capture {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #FFF0F5;
+            border-radius: 12px;
+        }
+
+        .phone-capture.active {
+            display: block;
+        }
+
+        .phone-capture h3 {
+            color: #FF4081;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .phone-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE4E9;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-bottom: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: #FF4081;
+        }
+
+        .submit-phone-btn {
+            background: #FF4081;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-phone-btn:hover {
+            background: #F50057;
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 40px;
+            }
+            
+            .name {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <svg class="floral-top" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,20 Q65,15 70,30 Q75,45 60,50 Q75,55 70,70 Q65,85 50,80 Q35,85 30,70 Q25,55 40,50 Q25,45 30,30 Q35,15 50,20 Z" 
+                      fill="none" stroke="white" stroke-width="2"/>
+            </svg>
+            <svg class="floral-bottom" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,20 Q65,15 70,30 Q75,45 60,50 Q75,55 70,70 Q65,85 50,80 Q35,85 30,70 Q25,55 40,50 Q25,45 30,30 Q35,15 50,20 Z" 
+                      fill="none" stroke="white" stroke-width="2"/>
+            </svg>
+            <div class="logo">Aadorini</div>
+            <div class="tagline">Sarees for Every Occasion</div>
+        </div>
+
+        <div class="content">
+            <div class="name">Yasharya (Aish) Karmakar</div>
+
+            <div class="contact-section">
+                <button class="email-copy-btn" onclick="copyEmail()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="emailBtnText">Copy Email for E-Transfer</span>
+                </button>
+            </div>
+
+            <div class="contact-section">
+                <a href="tel:+17809374221" class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF4081">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span class="contact-text">780-937-4221</span>
+                </a>
+
+                <div class="contact-item" style="cursor: default; background: white; border: 2px solid #FFF0F5;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF4081">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span class="contact-text">yashkarma03@gmail.com</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/14QBnCziiqK/" target="_blank" class="social-link" title="Visit Facebook Page">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Phone capture form (hidden, will activate later) -->
+            <div class="phone-capture" id="phoneCapture">
+                <h3>Stay Updated</h3>
+                <input type="tel" class="phone-input" placeholder="Your phone number" id="phoneInput">
+                <button class="submit-phone-btn" onclick="submitPhone()">Subscribe for Updates</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function copyEmail() {
+            const email = 'yashkarma03@gmail.com';
+            const btn = document.querySelector('.email-copy-btn');
+            const btnText = document.getElementById('emailBtnText');
+            
+            navigator.clipboard.writeText(email).then(() => {
+                btn.classList.add('copied');
+                btnText.textContent = 'Email Copied!';
+                showToast('Email copied! Ready for E-Transfer');
+                
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btnText.textContent = 'Copy Email for E-Transfer';
+                }, 2000);
+            }).catch(() => {
+                showToast('Tap and hold to copy: ' + email);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Function to enable phone capture (call this when you're ready)
+        function enablePhoneCapture() {
+            document.getElementById('phoneCapture').classList.add('active');
+        }
+
+        // Phone submission (you'll need to connect this to your backend)
+        function submitPhone() {
+            const phone = document.getElementById('phoneInput').value;
+            
+            if (phone.length < 10) {
+                showToast('Please enter a valid phone number');
+                return;
+            }
+            
+            // TODO: Connect to your backend/database
+            console.log('Phone submitted:', phone);
+            showToast('Thanks! You\'re subscribed for updates');
+            document.getElementById('phoneInput').value = '';
+            
+            // Example: Send to a Google Form, Airtable, or your own API
+            // fetch('YOUR_ENDPOINT_HERE', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify({phone: phone})
+            // });
+        }
+
+        // Uncomment this line when you want to show the phone capture form
+        // enablePhoneCapture();
+    </script>
+</body>
+</html>
